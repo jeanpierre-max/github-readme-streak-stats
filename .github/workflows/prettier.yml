@@ -27,13 +27,19 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         uses: actions/checkout@v3
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
+          cache: 'pnpm'
 
       - name: Install prettier and plugin-php
-        run: npm i
+        run: pnpm install --frozen-lockfile
 
       - name: Lint with Prettier
         continue-on-error: true

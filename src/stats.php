@@ -5,20 +5,18 @@ declare(strict_types=1);
 require_once "whitelist.php";
 
 /**
- * Build a GraphQL query for a contribution graph
+ * Build a parametrized GraphQL query for a contribution graph
  *
- * @param string $user GitHub username to get graphs for
- * @param int $year Year to get graph for
- * @return string GraphQL query
+ * Uses GraphQL variables instead of string interpolation to prevent injection.
+ *
+ * @return string GraphQL query template with variables
  */
-function buildContributionGraphQuery(string $user, int $year): string
+function buildContributionGraphQuery(): string
 {
-    $start = "$year-01-01T00:00:00Z";
-    $end = "$year-12-31T23:59:59Z";
-    return "query {
-        user(login: \"$user\") {
+    return 'query($user: String!, $start: DateTime!, $end: DateTime!) {
+        user(login: $user) {
             createdAt
-            contributionsCollection(from: \"$start\", to: \"$end\") {
+            contributionsCollection(from: $start, to: $end) {
                 contributionYears
                 contributionCalendar {
                     weeks {
@@ -30,7 +28,23 @@ function buildContributionGraphQuery(string $user, int $year): string
                 }
             }
         }
-    }";
+    }';
+}
+
+/**
+ * Build GraphQL variables for a contribution graph query
+ *
+ * @param string $user GitHub username
+ * @param int $year Year to get graph for
+ * @return array<string,string> GraphQL variables
+ */
+function buildContributionGraphVariables(string $user, int $year): array
+{
+    return [
+        "user" => $user,
+        "start" => "$year-01-01T00:00:00Z",
+        "end" => "$year-12-31T23:59:59Z",
+    ];
 }
 
 /**
@@ -45,10 +59,11 @@ function executeContributionGraphRequests(string $user, array $years): array
     $tokens = [];
     $requests = [];
     // build handles for each year
+    $query = buildContributionGraphQuery();
     foreach ($years as $year) {
         $tokens[$year] = getGitHubToken();
-        $query = buildContributionGraphQuery($user, $year);
-        $requests[$year] = getGraphQLCurlHandle($query, $tokens[$year]);
+        $variables = buildContributionGraphVariables($user, $year);
+        $requests[$year] = getGraphQLCurlHandle($query, $tokens[$year], $variables);
     }
     // build multi-curl handle
     $multi = curl_multi_init();
@@ -88,9 +103,9 @@ function executeContributionGraphRequests(string $user, array $years): array
             error_log("First attempt to decode response for $user's $year contributions failed. $message");
             error_log("Contents: $contents");
             // retry request
-            $query = buildContributionGraphQuery($user, $year);
             $token = getGitHubToken();
-            $request = getGraphQLCurlHandle($query, $token);
+            $variables = buildContributionGraphVariables($user, $year);
+            $request = getGraphQLCurlHandle($query, $token, $variables);
             $contents = curl_exec($request);
             $decoded = is_string($contents) ? json_decode($contents) : null;
             // if the response is still empty or invalid, log an error and skip the year
@@ -225,9 +240,10 @@ function removeGitHubToken(string $token): void
  *
  * @param string $query GraphQL query
  * @param string $token GitHub token to use for the request
+ * @param array<string,mixed> $variables GraphQL variables to send with the query
  * @return CurlHandle The curl handle for the request
  */
-function getGraphQLCurlHandle(string $query, string $token): CurlHandle
+function getGraphQLCurlHandle(string $query, string $token, array $variables = []): CurlHandle
 {
     $headers = [
         "Authorization: bearer $token",
@@ -236,6 +252,9 @@ function getGraphQLCurlHandle(string $query, string $token): CurlHandle
         "User-Agent: GitHub-Readme-Streak-Stats",
     ];
     $body = ["query" => $query];
+    if (!empty($variables)) {
+        $body["variables"] = $variables;
+    }
     // create curl request
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, "https://api.github.com/graphql");

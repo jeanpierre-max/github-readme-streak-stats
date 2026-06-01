@@ -36,7 +36,8 @@ try {
     // get streak stats for user given in query string
     $user = preg_replace("/[^a-zA-Z0-9\-]/", "", $_REQUEST["user"]);
     $startingYear = isset($_REQUEST["starting_year"]) ? intval($_REQUEST["starting_year"]) : null;
-    $mode = isset($_GET["mode"]) ? $_GET["mode"] : null;
+    $validModes = ["daily", "weekly"];
+    $mode = isset($_GET["mode"]) && in_array($_GET["mode"], $validModes, true) ? $_GET["mode"] : null;
     $excludeDaysRaw = $_GET["exclude_days"] ?? "";
 
     // Build cache options based on request parameters

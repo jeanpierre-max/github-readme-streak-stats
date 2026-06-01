@@ -776,6 +776,10 @@ function convertSvgToPng(string $svg, int $cardWidth, int $cardHeight): string
     // replace newlines with spaces
     $svg = str_replace("\n", " ", $svg);
 
+    // clamp dimensions to safe range before passing to shell
+    $cardWidth = max(1, min((int) $cardWidth, 5000));
+    $cardHeight = max(1, min((int) $cardHeight, 5000));
+
     // escape svg for shell
     $svg = escapeshellarg($svg);
 
@@ -786,12 +790,12 @@ function convertSvgToPng(string $svg, int $cardWidth, int $cardHeight): string
     $cmd = "echo {$svg} | inkscape --pipe --export-filename - -w {$cardWidth} -h {$cardHeight} --export-type png";
 
     // convert svg to png
-    $png = shell_exec($cmd); // skipcq: PHP-A1009
+    $png = shell_exec($cmd);
 
     // check if the conversion was successful
     if (empty($png)) {
         // `2>&1`: redirect stderr to stdout
-        $error = shell_exec("$cmd 2>&1"); // skipcq: PHP-A1009
+        $error = shell_exec("$cmd 2>&1");
         throw new InvalidArgumentException("Failed to convert SVG to PNG: {$error}", 500);
     }
 
