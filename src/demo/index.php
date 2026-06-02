@@ -1,7 +1,7 @@
 <?php
 
-$THEMES = include "../themes.php";
-$TRANSLATIONS = include "../translations.php";
+$THEMES = include __DIR__ . "/../themes.php";
+$TRANSLATIONS = include __DIR__ . "/../translations.php";
 // Get the keys of the first value in the translations array
 // and filter to only include locales that have an array as the value
 $LOCALES = array_filter(array_keys($TRANSLATIONS), function ($locale) use ($TRANSLATIONS) {

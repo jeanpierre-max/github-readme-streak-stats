@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require_once "../card.php";
-require_once "../stats.php";
+require_once __DIR__ . "/../card.php";
+require_once __DIR__ . "/../stats.php";
 
 $mode = $_GET["mode"] ?? "daily";
 

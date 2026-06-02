@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Readme Streak Stats</title>
+    <style>
+      :root {
+        --bg: #0d1117;
+        --card-bg: #161b22;
+        --border: #30363d;
+        --text: #e6edf3;
+        --muted: #8b949e;
+        --purple: #a855f7;
+        --purple-dark: #7c3aed;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        gap: 2rem;
+      }
+
+      header {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      header h1 span {
+        color: var(--purple);
+      }
+
+      header p {
+        color: var(--muted);
+        font-size: 1rem;
+        max-width: 480px;
+        line-height: 1.5;
+      }
+
+      .preview {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        max-width: 540px;
+      }
+
+      .preview img {
+        width: 100%;
+        max-width: 495px;
+        border-radius: 8px;
+      }
+
+      .preview p {
+        color: var(--muted);
+        font-size: 0.875rem;
+        text-align: center;
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: opacity 0.15s;
+        cursor: pointer;
+        border: none;
+      }
+
+      .btn:hover {
+        opacity: 0.85;
+      }
+
+      .btn-primary {
+        background: var(--purple);
+        color: #fff;
+      }
+
+      .btn-secondary {
+        background: var(--card-bg);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .quickstart {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        width: 100%;
+        max-width: 540px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .quickstart h2 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .code-block {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.8rem;
+        color: var(--text);
+        overflow-x: auto;
+        white-space: nowrap;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .code-block:hover::after {
+        content: "Copiar";
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--purple);
+        color: #fff;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+      }
+
+      .code-block span {
+        color: var(--purple);
+      }
+
+      footer {
+        color: var(--muted);
+        font-size: 0.8rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🔥 GitHub Readme <span>Streak Stats</span></h1>
+      <p>
+        Muestra tu racha de contribuciones, total de commits y racha más larga
+        directamente en el README de tu perfil de GitHub.
+      </p>
+    </header>
+
+    <div class="preview">
+      <img
+        src="/?user=jeanpierre-max&theme=midnight-purple&hide_border=true&background=0D1117&stroke=A855F7&ring=A855F7&fire=FF6B6B&currStreakLabel=A855F7&sideLabels=ffffff&dates=888888"
+        alt="GitHub Streak Stats Preview"
+        loading="lazy"
+      />
+      <p>Vista previa en tiempo real · Datos actualizados cada 24 horas</p>
+    </div>
+
+    <div class="actions">
+      <a href="/demo" class="btn btn-primary">
+        🎨 Personalizar tarjeta
+      </a>
+      <a
+        href="https://github.com/jeanpierre-max/github-readme-streak-stats"
+        class="btn btn-secondary"
+        target="_blank"
+        rel="noopener"
+      >
+        Ver repositorio
+      </a>
+    </div>
+
+    <div class="quickstart">
+      <h2>⚡ Uso rápido</h2>
+      <p style="font-size:0.85rem; color:var(--muted)">
+        Copia este markdown en el README de tu perfil y reemplaza
+        <code style="color:var(--purple)">TU_USUARIO</code> con tu nombre de
+        GitHub:
+      </p>
+      <div
+        class="code-block"
+        onclick="navigator.clipboard.writeText(this.dataset.copy); this.style.borderColor='var(--purple)';"
+        data-copy="![GitHub Streak](https://jeanpierre-streak.vercel.app/?user=TU_USUARIO)"
+        title="Clic para copiar"
+      >
+        ![GitHub Streak](<span>https://jeanpierre-streak.vercel.app/</span>?user=<span>TU_USUARIO</span>)
+      </div>
+    </div>
+
+    <footer>Mantenido por @jeanpierre-max · Deployado en Vercel</footer>
+  </body>
+</html>
