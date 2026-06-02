@@ -23,10 +23,6 @@
       "dest": "/src/demo/preview.php"
     },
     {
-      "src": "/$",
-      "dest": "/index.html"
-    },
-    {
       "src": "/(.*)",
       "dest": "/index.php"
     }

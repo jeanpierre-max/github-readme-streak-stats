@@ -14,12 +14,15 @@ require_once __DIR__ . "/src/cache.php";
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
-// En Vercel las variables del dashboard llegan via getenv(), no siempre via $_SERVER.
+// En Vercel las variables del dashboard llegan via getenv() o $_ENV, no siempre via $_SERVER.
 // Las copiamos a $_SERVER para que el resto del código funcione igual.
 foreach (["TOKEN", "TOKEN2", "TOKEN3", "WHITELIST", "DISABLE_CACHE"] as $envKey) {
     if (!isset($_SERVER[$envKey])) {
         $val = getenv($envKey);
-        if ($val !== false && $val !== "") {
+        if ($val === false) {
+            $val = $_ENV[$envKey] ?? null;
+        }
+        if ($val !== null && $val !== false && $val !== "") {
             $_SERVER[$envKey] = $val;
         }
     }
@@ -36,9 +39,10 @@ header("Expires: " . gmdate("D, d M Y H:i:s", time() + $cacheSeconds) . " GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: public, max-age=$cacheSeconds");
 
-// redirect to demo site if user is not given
+// si no hay usuario, servir la landing page directamente (sin redirect)
 if (!isset($_REQUEST["user"])) {
-    header("Location: /demo");
+    header("Content-Type: text/html; charset=utf-8");
+    readfile(__DIR__ . "/index.html");
     exit();
 }
 
