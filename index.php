@@ -16,10 +16,10 @@ $dotenv->safeLoad();
 
 // En Vercel las variables del dashboard llegan via getenv(), no siempre via $_SERVER.
 // Las copiamos a $_SERVER para que el resto del código funcione igual.
-foreach (['TOKEN', 'TOKEN2', 'TOKEN3', 'WHITELIST', 'DISABLE_CACHE'] as $envKey) {
+foreach (["TOKEN", "TOKEN2", "TOKEN3", "WHITELIST", "DISABLE_CACHE"] as $envKey) {
     if (!isset($_SERVER[$envKey])) {
         $val = getenv($envKey);
-        if ($val !== false && $val !== '') {
+        if ($val !== false && $val !== "") {
             $_SERVER[$envKey] = $val;
         }
     }

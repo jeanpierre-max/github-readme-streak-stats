@@ -14,8 +14,8 @@ $dotenv->safeLoad();
 
 // En GitHub Actions el TOKEN llega como variable de entorno del sistema,
 // no siempre en $_SERVER. Lo copiamos para que el código lo encuentre.
-foreach (['TOKEN', 'TOKEN2', 'TOKEN3', 'WHITELIST'] as $envKey) {
-    if (!isset($_SERVER[$envKey]) && ($val = getenv($envKey)) !== false && $val !== '') {
+foreach (["TOKEN", "TOKEN2", "TOKEN3", "WHITELIST"] as $envKey) {
+    if (!isset($_SERVER[$envKey]) && ($val = getenv($envKey)) !== false && $val !== "") {
         $_SERVER[$envKey] = $val;
     }
 }
