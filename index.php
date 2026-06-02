@@ -10,13 +10,24 @@ require_once __DIR__ . "/src/stats.php";
 require_once __DIR__ . "/src/card.php";
 require_once __DIR__ . "/src/cache.php";
 
-// load .env
+// load .env (solo aplica en desarrollo local; en Vercel usa variables del dashboard)
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
+// En Vercel las variables del dashboard llegan via getenv(), no siempre via $_SERVER.
+// Las copiamos a $_SERVER para que el resto del código funcione igual.
+foreach (['TOKEN', 'TOKEN2', 'TOKEN3', 'WHITELIST', 'DISABLE_CACHE'] as $envKey) {
+    if (!isset($_SERVER[$envKey])) {
+        $val = getenv($envKey);
+        if ($val !== false && $val !== '') {
+            $_SERVER[$envKey] = $val;
+        }
+    }
+}
+
 // if environment variables are not loaded, display error
 if (!isset($_SERVER["TOKEN"])) {
-    renderOutput(".env was not found o falta TOKEN. Agrega la variable TOKEN en Vercel.", 500);
+    renderOutput("Falta la variable TOKEN. Agrégala en Vercel: Settings → Environment Variables → TOKEN.", 500);
 }
 
 // set cache to refresh once per day (24 hours)
