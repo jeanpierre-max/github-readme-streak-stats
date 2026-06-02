@@ -39,7 +39,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install prettier and plugin-php
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: Lint with Prettier
         continue-on-error: true
