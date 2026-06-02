@@ -33,18 +33,19 @@ if (!isset($_SERVER["TOKEN"])) {
     renderOutput("Falta la variable TOKEN. Agrégala en Vercel: Settings → Environment Variables → TOKEN.", 500);
 }
 
-// set cache to refresh once per day (24 hours)
+// si no hay usuario, servir la landing page directamente (sin redirect, sin caché largo)
+if (!isset($_REQUEST["user"])) {
+    header("Content-Type: text/html; charset=utf-8");
+    header("Cache-Control: public, max-age=3600");
+    readfile(__DIR__ . "/index.html");
+    exit();
+}
+
+// set cache to refresh once per day (24 hours) — solo para la tarjeta SVG
 $cacheSeconds = CACHE_DURATION;
 header("Expires: " . gmdate("D, d M Y H:i:s", time() + $cacheSeconds) . " GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: public, max-age=$cacheSeconds");
-
-// si no hay usuario, servir la landing page directamente (sin redirect)
-if (!isset($_REQUEST["user"])) {
-    header("Content-Type: text/html; charset=utf-8");
-    readfile(__DIR__ . "/index.html");
-    exit();
-}
 
 try {
     $user = preg_replace("/[^a-zA-Z0-9\-]/", "", $_REQUEST["user"]);
