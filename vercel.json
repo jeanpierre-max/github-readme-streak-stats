@@ -1,15 +1,18 @@
 {
-  "functions": {
-    "src/index.php": {
-      "runtime": "vercel-php@0.7.2"
+  "builds": [
+    {
+      "src": "src/index.php",
+      "use": "vercel-php@0.7.2"
     },
-    "src/demo/index.php": {
-      "runtime": "vercel-php@0.7.2"
+    {
+      "src": "src/demo/index.php",
+      "use": "vercel-php@0.7.2"
     },
-    "src/demo/preview.php": {
-      "runtime": "vercel-php@0.7.2"
+    {
+      "src": "src/demo/preview.php",
+      "use": "vercel-php@0.7.2"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/demo(.*)",
