@@ -10,7 +10,15 @@ declare(strict_types=1);
 
 // Default cache duration: 24 hours (in seconds)
 define("CACHE_DURATION", 24 * 60 * 60);
-define("CACHE_DIR", __DIR__ . "/../cache");
+
+// En entornos serverless (Vercel/Lambda) el sistema de archivos es de solo lectura
+// excepto el directorio temporal. Usamos sys_get_temp_dir() (/tmp en Vercel) en ese caso.
+define(
+    "CACHE_DIR",
+    getenv("VERCEL") !== false || getenv("AWS_LAMBDA_FUNCTION_NAME") !== false
+        ? sys_get_temp_dir() . "/streak-stats-cache"
+        : __DIR__ . "/../cache",
+);
 
 /**
  * Generate a cache key for a user's request
@@ -54,7 +62,8 @@ function getCacheFilePath(string $key): string
 function ensureCacheDir(): bool
 {
     if (!is_dir(CACHE_DIR)) {
-        return mkdir(CACHE_DIR, 0755, true);
+        // @ suprime warnings si el FS es de solo lectura; el caché es opcional
+        return @mkdir(CACHE_DIR, 0755, true);
     }
     return true;
 }
