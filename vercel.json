@@ -1,0 +1,27 @@
+{
+  "functions": {
+    "src/index.php": {
+      "runtime": "vercel-php@0.7.2"
+    },
+    "src/demo/index.php": {
+      "runtime": "vercel-php@0.7.2"
+    },
+    "src/demo/preview.php": {
+      "runtime": "vercel-php@0.7.2"
+    }
+  },
+  "routes": [
+    {
+      "src": "/demo(.*)",
+      "dest": "/src/demo/index.php"
+    },
+    {
+      "src": "/preview(.*)",
+      "dest": "/src/demo/preview.php"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/src/index.php"
+    }
+  ]
+}

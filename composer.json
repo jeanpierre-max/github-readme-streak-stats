@@ -1,6 +1,6 @@
 {
-  "name": "denvercoder1/github-readme-streak-stats",
-  "description": "🔥 Stay motivated and show off your contribution streak! 🌟 Display your total contributions, current streak, and longest streak on your GitHub profile README.",
+  "name": "jeanpierre-max/github-readme-streak-stats",
+  "description": "Muestra tu total de contribuciones, racha actual y racha más larga en el README de tu perfil de GitHub.",
   "keywords": [
     "github",
     "dynamic",
@@ -11,17 +11,6 @@
   ],
   "license": "MIT",
   "version": "1.6.0",
-  "homepage": "https://github.com/DenverCoder1/github-readme-streak-stats",
-  "repositories": [
-      {
-          "type": "vcs",
-          "url": "https://github.com/DenverCoder1/github-readme-streak-stats"
-      }
-  ],
-  "support": {
-    "issues": "https://github.com/DenverCoder1/github-readme-streak-stats/issues",
-    "source": "https://github.com/DenverCoder1/github-readme-streak-stats"
-  },
   "autoload": {
     "classmap": [
       "src/"
@@ -41,7 +30,7 @@
       "php -S localhost:8000 -t src"
     ],
     "test": "./vendor/bin/phpunit --testdox tests",
-    "lint": "npx prettier --check *.md **/*.{php,md,js,css}",
-    "lint-fix": "npx prettier --write *.md **/*.{php,md,js,css}"
+    "lint": "pnpm exec prettier --check *.md **/*.{php,md,js,css}",
+    "lint-fix": "pnpm exec prettier --write *.md **/*.{php,md,js,css}"
   }
 }

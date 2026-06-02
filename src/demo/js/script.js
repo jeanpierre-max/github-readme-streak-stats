@@ -43,9 +43,8 @@ const preview = {
     const demoImageURL = `preview.php?${query}`;
     // update preview
     if (params.type !== "json") {
-      const repoLink = "https://git.io/streak-stats";
-      const md = `[![GitHub Streak](${imageURL})](${repoLink})`;
-      const html = `<a href="${repoLink}"><img src="${imageURL}" alt="GitHub Streak" /></a>`;
+      const md = `![GitHub Streak](${imageURL})`;
+      const html = `<img src="${imageURL}" alt="GitHub Streak" />`;
       document.querySelector(".output img").src = demoImageURL;
       document.querySelector(".md code").innerText = md;
       document.querySelector(".html code").innerText = html;

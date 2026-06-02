@@ -28,7 +28,7 @@ final class StatsTest extends TestCase
      */
     public function testValidUsername(): void
     {
-        $contributionGraphs = getContributionGraphs("DenverCoder1");
+        $contributionGraphs = getContributionGraphs("jeanpierre-max");
         $contributions = getContributionDates($contributionGraphs);
         $stats = getContributionStats($contributions);
         // test total contributions
@@ -76,7 +76,7 @@ final class StatsTest extends TestCase
      */
     public function testOverrideStartingYear(): void
     {
-        $contributionGraphs = getContributionGraphs("DenverCoder1", 2019);
+        $contributionGraphs = getContributionGraphs("jeanpierre-max", 2019);
         $contributions = getContributionDates($contributionGraphs);
         $stats = getContributionStats($contributions);
         // test first contribution
@@ -98,9 +98,9 @@ final class StatsTest extends TestCase
      */
     public function testValidUsernameWithWhitelist(): void
     {
-        $_SERVER["WHITELIST"] = "DenverCoder1";
+        $_SERVER["WHITELIST"] = "jeanpierre-max";
         try {
-            $contributionGraphs = getContributionGraphs("DenverCoder1");
+            $contributionGraphs = getContributionGraphs("jeanpierre-max");
             $this->assertIsArray($contributionGraphs);
             $this->assertNotEmpty($contributionGraphs);
         } finally {
@@ -113,7 +113,7 @@ final class StatsTest extends TestCase
      */
     public function testNotWhitelistedUsername(): void
     {
-        $_SERVER["WHITELIST"] = "DenverCoder1";
+        $_SERVER["WHITELIST"] = "jeanpierre-max";
         try {
             $this->expectException(InvalidArgumentException::class);
             $this->expectExceptionMessage("User not in whitelist.");

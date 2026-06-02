@@ -59,28 +59,17 @@ function camelToSkewer(string $str): string
     <script type="text/javascript" src="./js/accordion.js?v=<?= filemtime("./js/accordion.js") ?>" defer></script>
     <script type="text/javascript" src="./js/toggle-dark.js?v=<?= filemtime("./js/toggle-dark.js") ?>" defer></script>
     <script type="text/javascript" src="./js/jscolor.min.js?v=<?= filemtime("./js/jscolor.min.js") ?>" defer></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 
 <body <?php echo $darkmode === "on" ? 'data-theme="dark"' : ""; ?>>
     <h1>🔥 GitHub Readme Streak Stats</h1>
-
-    <!-- GitHub badges/links section -->
-    <div class="github">
-        <!-- GitHub Sponsors -->
-        <a class="github-button" href="https://github.com/sponsors/denvercoder1" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-heart" data-size="large" aria-label="Sponsor @denvercoder1 on GitHub">Sponsor</a>
-        <!-- View on GitHub -->
-        <a class="github-button" href="https://github.com/denvercoder1/github-readme-streak-stats" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="View denvercoder1/github-readme-streak-stats on GitHub">View on GitHub</a>
-        <!-- GitHub Star -->
-        <a class="github-button" href="https://github.com/denvercoder1/github-readme-streak-stats" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star denvercoder1/github-readme-streak-stats on GitHub">Star</a>
-    </div>
 
     <div class="container">
         <div class="properties">
             <h2>Properties</h2>
             <form class="parameters">
                 <label for="user">Username<span title="required">*</span></label>
-                <input class="param" type="text" id="user" name="user" placeholder="DenverCoder1" pattern="^[A-Za-z\d-]{0,39}[A-Za-z\d]$" title="Up to 40 letters or hyphens but not ending with hyphen" />
+                <input class="param" type="text" id="user" name="user" placeholder="jeanpierre-max" pattern="^[A-Za-z\d-]{0,39}[A-Za-z\d]$" title="Up to 40 letters or hyphens but not ending with hyphen" />
 
                 <label for="theme">Theme</label>
                 <select class="param" id="theme" name="theme">
@@ -264,17 +253,6 @@ function camelToSkewer(string $str): string
                         Copy To Clipboard
                     </button>
                 </div>
-            </div>
-            <div class="bottom">
-                <a href="https://github.com/DenverCoder1/github-readme-streak-stats/blob/main/docs/faq.md" target="_blank" class="underline-hover faq">
-                    Frequently Asked Questions
-                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path d="M10 6v2H5v11h11v-5h2v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6zm11-3v9l-3.794-3.793-5.999 6-1.414-1.414 5.999-6L12 3h9z"></path>
-                        </g>
-                    </svg>
-                </a>
             </div>
         </div>
     </div>
